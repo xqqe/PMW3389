@@ -123,6 +123,9 @@ void setup() {
   //pinMode(reset, INPUT_PULLUP);
   
   pinMode(Btn1_Pin, INPUT_PULLUP);
+  // pinMode(Btn2_Pin, INPUT_PULLUP);
+  // pinMode(Btn4_Pin, INPUT_PULLUP);
+  // pinMode(Btn8_Pin, INPUT_PULLUP);
   
   SPI.begin();
   SPI.setDataMode(SPI_MODE3);
@@ -136,13 +139,12 @@ void setup() {
 
   delay(1000);
 
-  dispRegisters();
+  //dispRegisters();
   initComplete = 9;
 
   lastTS = micros();
 
-  //MOUSE_BEGIN;
-  Mouse.begin();
+  MOUSE_BEGIN;
 }
 
 void adns_com_begin() {
@@ -220,7 +222,8 @@ void adns_upload_firmware() {
   adns_com_end();
 }
 
-void setCPI(int cpi){
+void setCPI(int cpi)
+{
   unsigned cpival = cpi / 50;
 
   
@@ -267,7 +270,8 @@ void performStartup(void) {
 }
 
 // Button state checkup routine
-void check_button_state() {
+void check_button_state() 
+{
   // runs only after initialization
   if(initComplete != 9)
     return;
@@ -404,7 +408,7 @@ void loop() {
 
     // update only if a movement is detected.
 
-  #ifdef ADVANCE_MODE 
+#ifdef ADVANCE_MODE 
     if(AdvMouse.needSendReport() || motion)
     {
       AdvMouse.move(dx, dy, 0);
@@ -412,23 +416,18 @@ void loop() {
       dx = 0;
       dy = 0;
     }
-  #else
+#else
     if(motion)
     {
       signed char mdx = constrain(dx, -127, 127);
       signed char mdy = constrain(dy, -127, 127);
       
       Mouse.move(mdx, mdy, 0);
-      Serial.print("x = ");
-      Serial.print( mdx );
-      Serial.print(" | ");
-      Serial.print("y = ");
-      Serial.println( mdy );
       
       dx = 0;
       dy = 0;
     }
-  #endif
+#endif
 
     if(reportSQ && !surface)  // print surface quality
     {
@@ -465,7 +464,8 @@ void loop() {
   }
 }
 
-unsigned long readNumber() {
+unsigned long readNumber()
+{
   String inString = "";
   for (int i = 0; i < 10; i++)
   {
