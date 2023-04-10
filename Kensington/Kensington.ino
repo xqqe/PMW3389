@@ -3,6 +3,9 @@
 //#define ADVANCE_MODE
 
 
+//check registries to see how this might be getting messed up
+
+
 #include <SPI.h>
 #include <avr/pgmspace.h>
 
@@ -137,8 +140,10 @@ void setup() {
 
   dx = dy = 0;
 
-  delay(1000);
+  delay(5000);
 
+  
+  Serial.println("Lando, help.");
   //dispRegisters();
   initComplete = 9;
 
@@ -222,8 +227,7 @@ void adns_upload_firmware() {
   adns_com_end();
 }
 
-void setCPI(int cpi)
-{
+void setCPI(int cpi){
   unsigned cpival = cpi / 50;
 
   
@@ -270,8 +274,7 @@ void performStartup(void) {
 }
 
 // Button state checkup routine
-void check_button_state() 
-{
+void check_button_state() {
   // runs only after initialization
   if(initComplete != 9)
     return;
